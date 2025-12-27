@@ -5,13 +5,19 @@ on: push
 jobs:
   build:
     # операционная система для работы воркфлоу
-    runs-on:
-      ubuntu-latest
-      # build – произвольно выбранное имя задания
-      # их может быть больше одного
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
       - run: make setup
       - run: make test
       - run: make lint
+      - name: Print Hello from Hexlet
+        uses: hexlet-components/hello-from-hexlet-action@release
