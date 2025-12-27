@@ -1,0 +1,17 @@
+# file: .github/workflows/show-directory.yml
+name: show-directory
+# on – определяет события, которые запускают воркфлоу
+on: push
+jobs:
+  build:
+    # операционная система для работы воркфлоу
+    runs-on:
+      ubuntu-latest
+      # build – произвольно выбранное имя задания
+      # их может быть больше одного
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - run: make setup
+      - run: make test
+      - run: make lint
